@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Niket123",
+    "database": "database_development",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Niket123",
+    "database": "irctc",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Niket123",
+    "database": "irctc",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
