@@ -4,9 +4,9 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const trainRoutes = require('./routes/trainRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
-const db = require('./config/db');
+const db = require('./models'); // Correctly import models
 
-const { User, Train, Booking } = require('./models'); 
+const { User, Train, Booking } = db; // Destructure models from db
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,12 +20,12 @@ Booking.belongsTo(Train, { foreignKey: 'trainId' });
 // Middleware
 app.use(bodyParser.json());
 
-
 app.use('/api/auth', authRoutes);
 app.use('/api/trains', trainRoutes);
 app.use('/api/bookings', bookingRoutes);
 
-db.sync()
+db.sequelize
+  .sync()
   .then(() => {
     console.log('Database connected successfully.');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
