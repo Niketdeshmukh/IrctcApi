@@ -1,10 +1,14 @@
-const Booking = require('../models/Booking');
-const Train = require('../models/Train');
+const { Train, Booking } = require('../models');
 
 exports.bookSeat = async (req, res) => {
   const { trainId, seats } = req.body;
   try {
     const train = await Train.findOne({ where: { id: trainId } });
+
+    if (!train) {
+      return res.status(404).json({ error: 'Train not found' });
+    }
+
     if (train.availableSeats < seats) {
       return res.status(400).json({ error: 'Not enough seats available' });
     }
