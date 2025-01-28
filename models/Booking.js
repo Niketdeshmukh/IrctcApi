@@ -1,16 +1,22 @@
-const { DataTypes } = require('sequelize');
-const db = require('../config/db');
+'use strict';
+const { Model, DataTypes } = require('sequelize');
 
-const Booking = db.define('Booking', {
-  userId: { type: DataTypes.INTEGER, allowNull: false },
-  trainId: { type: DataTypes.INTEGER, allowNull: false },
-  seatsBooked: { type: DataTypes.INTEGER, allowNull: false },
-});
+module.exports = (sequelize) => {
+  class Booking extends Model {
+    static associate(models) {
+      Booking.belongsTo(models.User, { foreignKey: 'userId' });
+      Booking.belongsTo(models.Train, { foreignKey: 'trainId' });
+    }
+  }
 
+  Booking.init(
+    {
+      userId: { type: DataTypes.INTEGER, allowNull: false },
+      trainId: { type: DataTypes.INTEGER, allowNull: false },
+      seatsBooked: { type: DataTypes.INTEGER, allowNull: false },
+    },
+    { sequelize, modelName: 'Booking' }
+  );
 
-Booking.associate = function(models) {
-  Booking.belongsTo(models.User, { foreignKey: 'userId' });
-  Booking.belongsTo(models.Train, { foreignKey: 'trainId' });
+  return Booking;
 };
-
-module.exports = Booking;
